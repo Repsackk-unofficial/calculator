@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
-from funkcje.matrix_ops import add_matrices_steps, det_2x2_steps, det_3x3_steps
+from funkcje.matrix_ops import (
+    add_matrices_steps,
+    det_2x2_steps,
+    det_3x3_steps,
+    det_nxN_steps
+)
 
 def create_matrix_tab(tab):
     # ----------------------------
@@ -46,7 +51,7 @@ def create_matrix_tab(tab):
     tk.Button(tab, text="Stwórz macierz A", command=create_matrix_A).pack(pady=5)
 
     # ----------------------------
-    # MACIERZ B
+    # MACIERZ B (dla dodawania)
     # ----------------------------
     tk.Label(tab, text="Macierz B (tylko przy dodawaniu)").pack(pady=2)
     frame_matrix_B = tk.Frame(tab)
@@ -89,7 +94,8 @@ def create_matrix_tab(tab):
     combo_op = ttk.Combobox(tab, values=[
         "Dodawanie macierzy",
         "Wyznacznik 2x2",
-        "Wyznacznik 3x3"
+        "Wyznacznik 3x3",
+        "Wyznacznik NxN"
     ])
     combo_op.current(0)
     combo_op.pack(pady=5)
@@ -123,6 +129,12 @@ def create_matrix_tab(tab):
 
             elif op == "Wyznacznik 3x3":
                 det, steps = det_3x3_steps(A)
+                for s in steps:
+                    text_steps.insert(tk.END, s + "\n")
+                text_steps.insert(tk.END, f"\nWyznacznik = {det}")
+
+            elif op == "Wyznacznik NxN":
+                det, steps = det_nxN_steps(A)
                 for s in steps:
                     text_steps.insert(tk.END, s + "\n")
                 text_steps.insert(tk.END, f"\nWyznacznik = {det}")
